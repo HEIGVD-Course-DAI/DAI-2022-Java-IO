@@ -33,14 +33,14 @@ public class Application {
      */
     System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
     
-       
-    int numberOfQuotes = 0;
-    try {
-      numberOfQuotes = Integer.parseInt(args[0]);
-    } catch (Exception e) {
-      System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
-      System.exit(-1);
-    }
+    // Quick fix to avoid launching the application in CLI
+    int numberOfQuotes = 2;
+//    try {
+//      numberOfQuotes = Integer.parseInt(args[0]);
+//    } catch (Exception e) {
+//      System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
+//      System.exit(-1);
+//    }
         
     Application app = new Application();
     try {
@@ -78,6 +78,7 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
+      storeQuote(quote, "quote-" + i + ".utf8");
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {

@@ -19,17 +19,28 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
+  private int noLine = 1;
+
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    String[] lines = c.split("\r\n");
     StringBuilder newString = new StringBuilder();
-
-    for (int i = 1; i <= lines.length; ++i) {
-      newString.append(i + ". ");
-      newString.append(lines[i - 1]);
-      newString.append("\n");
+    if (noLine == 1) {
+      newString.append(noLine + ". ");
+      ++noLine;
     }
+
+    if (c.charAt(0) == '\n') {
+      newString.append("\n" + noLine + ". ");
+      ++noLine;
+      return newString.toString();
+    }
+
+    if (c.charAt(0) == '\r') {
+      return "";
+    }
+
+    newString.append(c);
 
     return newString.toString();
   }

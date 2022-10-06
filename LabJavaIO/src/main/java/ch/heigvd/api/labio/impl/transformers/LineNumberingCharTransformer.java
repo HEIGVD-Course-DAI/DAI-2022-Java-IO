@@ -19,21 +19,26 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
+  private int lineNumber = 1;
+  private boolean firstRun = true;
+
   public String transform(String c) {
-    // Replace the carriage return, split the string per line
-    String[] lineArray = (c.replace("\r\n", "\n").split("\\n"));
-
-    StringBuilder temp = new StringBuilder();
-
-    int nbLine = 1;
-
-    for (String line : lineArray) {
-      temp.append(nbLine++).append(". ").append(line);
-      if(nbLine != lineArray.length) {
-        // If we aren't at the last line, add a return
-        temp.append('\n');
-      }
+    String temp = "";
+    if(firstRun) {
+      firstRun = false;
+      temp = lineNumber++ + ". ";
     }
-    return temp.toString();
+
+    if(c.equals("\r"))
+      return temp;
+
+    if(c.equals("\n"))
+      temp += c + lineNumber++ + ". ";
+    else {
+      temp += c;
+    }
+
+    return temp;
+
   }
 }

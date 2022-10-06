@@ -2,13 +2,10 @@ package ch.heigvd.api.labio.impl;
 
 import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -139,9 +136,14 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-    FileOutputStream outputStream = new FileOutputStream(file);
-    outputStream.write(quote.getQuote().getBytes(Charsets.UTF_8));
-    outputStream.close();
+    OutputStreamWriter streamWriter = new OutputStreamWriter(
+            new BufferedOutputStream(
+                    new FileOutputStream(file)
+            ),
+            StandardCharsets.UTF_8
+    );
+    streamWriter.write(quote.getQuote().toCharArray());
+    streamWriter.close();
   }
   
   public void processQuoteFiles() throws IOException {

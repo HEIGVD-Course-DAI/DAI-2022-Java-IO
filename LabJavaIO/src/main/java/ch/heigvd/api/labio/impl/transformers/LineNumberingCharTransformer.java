@@ -22,6 +22,15 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String[] lines = c.split("\r\n");
+    StringBuilder newString = new StringBuilder();
+
+    for (int i = 1; i <= lines.length; ++i) {
+      newString.append(i + ". ");
+      newString.append(lines[i - 1]);
+      newString.append("\n");
+    }
+
+    return newString.toString();
   }
 }

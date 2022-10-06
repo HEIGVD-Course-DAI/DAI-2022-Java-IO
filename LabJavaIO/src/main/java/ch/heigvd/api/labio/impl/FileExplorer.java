@@ -2,6 +2,7 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 
 /**
@@ -25,16 +26,21 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        String[] contents = rootDirectory.list();
-        if (contents == null) return;
 
-        Arrays.sort(contents);
-        for (String s: contents) {
-            File curentFile = new File(rootDirectory.getPath() + "\\" + s);
-            if(curentFile.isFile()){
-                transformer.transform(curentFile);
+        ArrayDeque<File> files = new ArrayDeque<File>();
+
+        files.push(rootDirectory);
+
+
+        while(!files.isEmpty()) {
+            File s = files.pop();
+            if(s.isFile()){
+                transformer.transform(s);
             } else {
-                explore(curentFile);
+                if(s.listFiles() == null) continue;
+                for (File f: s.listFiles()) {
+                    files.push(f);
+                }
             }
         }
 

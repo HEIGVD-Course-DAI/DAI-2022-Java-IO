@@ -64,7 +64,7 @@ public class FileTransformer {
       int numberOfNewBytes = read.read(buffer);
       StringBuilder sb = new StringBuilder("");
       while (numberOfNewBytes != -1) {
-        for (int i = 0; i < numberOfNewBytes; i++) {
+          for (int i = 0; i < numberOfNewBytes; i++) {
           buffer[i] = noTransformer.transform( Character.toString(buffer[i])).charAt(0);
           sb.append(lineTransformer.transform(upperTransformer.transform(Character.toString(buffer[i]))));
         }

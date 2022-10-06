@@ -4,6 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -136,8 +138,19 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+    try (FileOutputStream fos = new FileOutputStream(file);
+         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+         BufferedWriter writer = new BufferedWriter(osw)
+    ) {
 
-  }
+        writer.append(quote.getQuote());
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
+    }
   
   public void processQuoteFiles() throws IOException {
     FileExplorer explorer = new FileExplorer();

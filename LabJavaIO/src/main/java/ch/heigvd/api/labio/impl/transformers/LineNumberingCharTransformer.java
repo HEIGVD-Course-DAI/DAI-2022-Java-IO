@@ -22,6 +22,7 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
+    c = c.replace("\r\n", "\n");
     throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

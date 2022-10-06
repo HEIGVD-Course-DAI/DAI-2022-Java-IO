@@ -2,7 +2,8 @@ package ch.heigvd.api.labio.impl.transformers;
 
 import java.util.logging.Logger;
 
-/**
+/**ust a simple case, before implementing other character transformers.
+ *
  * This class applies no transformation to the input character (a string with a single character).
  * It is just a simple case, before implementing other character transformers.
  *
@@ -14,6 +15,7 @@ public class NoOpCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    return c;
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

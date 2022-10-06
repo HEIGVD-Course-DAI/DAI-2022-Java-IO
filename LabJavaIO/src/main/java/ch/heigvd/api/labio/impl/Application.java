@@ -34,13 +34,13 @@ public class Application {
     System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
     
        
-    int numberOfQuotes = 5;
-    try {
+    int numberOfQuotes = 10;
+   /* try {
       numberOfQuotes = Integer.parseInt(args[0]);
     } catch (Exception e) {
       System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
       System.exit(-1);
-    }
+    }*/
 
     Application app = new Application();
     try {
@@ -80,6 +80,7 @@ public class Application {
        */
       String filename = "quote-" + i + ".utf8";
       storeQuote(quote,filename);
+
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
       }
@@ -128,7 +129,8 @@ public class Application {
     File file = new File(directory, filename);
     try{
       OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-      output.write(quote.getContent());
+      output.write(quote.getQuote());
+      output.close();
     }catch (Exception e){
       e.getStackTrace();
     }

@@ -19,14 +19,22 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
+  int lineCount = 1;
+  boolean firstChar = true;
+
   public String transform(String c) {
-    String[] s = c.split("\\n");
-    c = "";
-    for (int i = 0; i < s.length; ++i) {
-      s[i] = (i + 1) + ". " + s[i];
-      s[i] = s[i].replace('\r', '\n');
-      c += s[i];
+    if (firstChar) {
+      firstChar = false;
+      if (c.equals("\n")) return lineCount + ". \n" + ++lineCount + ". ";
+      return lineCount + ". " + c;
     }
-    return c;
+    switch(c) {
+      case "\r":
+        return "";
+      case "\n":
+        return c + ++lineCount + ". ";
+      default:
+        return c;
+    }
   }
 }

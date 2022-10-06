@@ -20,8 +20,13 @@ public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String[] s = c.split("\\n");
+    c = "";
+    for (int i = 0; i < s.length; ++i) {
+      s[i] = (i + 1) + ". " + s[i];
+      s[i] = s[i].replace('\r', '\n');
+      c += s[i];
+    }
+    return c;
   }
 }

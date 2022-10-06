@@ -4,8 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,14 +34,14 @@ public class Application {
     System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
     
        
-    int numberOfQuotes = 0;
+    int numberOfQuotes = 5;
     try {
       numberOfQuotes = Integer.parseInt(args[0]);
     } catch (Exception e) {
       System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
       System.exit(-1);
     }
-        
+
     Application app = new Application();
     try {
       /*
@@ -78,11 +78,10 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
-
-      LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
+      String filename = "quote-" + i + ".utf8";
+      storeQuote(quote,filename);
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
-
       }
     }
   }
@@ -127,7 +126,14 @@ public class Application {
 
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
+    try{
+      OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+      output.write(quote.getContent());
+    }catch (Exception e){
+      e.getStackTrace();
+    }
 
+    //output.close();
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
      * TODO: There is something missing here: you have to implement writing the file

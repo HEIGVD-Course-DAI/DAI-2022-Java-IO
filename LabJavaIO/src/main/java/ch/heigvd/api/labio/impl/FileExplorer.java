@@ -34,13 +34,13 @@ public class FileExplorer {
                 continue;
             }
 
-            for (File file : directory.listFiles()) {
+            Arrays.stream(directory.listFiles()).sorted().forEach(file -> {
                 if (file.isFile()) {
                     transformer.transform(file);
                 } else {
                     directories.push(file);
                 }
-            }
+            });
         }
     }
 }

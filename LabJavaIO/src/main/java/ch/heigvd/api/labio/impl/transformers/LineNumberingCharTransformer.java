@@ -20,8 +20,20 @@ public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    // Replace the carriage return, split the string per line
+    String[] lineArray = (c.replace("\r\n", "\n").split("\\n"));
+
+    StringBuilder temp = new StringBuilder();
+
+    int nbLine = 1;
+
+    for (String line : lineArray) {
+      temp.append(nbLine++).append(". ").append(line);
+      if(nbLine != lineArray.length) {
+        // If we aren't at the last line, add a return
+        temp.append('\n');
+      }
+    }
+    return temp.toString();
   }
 }

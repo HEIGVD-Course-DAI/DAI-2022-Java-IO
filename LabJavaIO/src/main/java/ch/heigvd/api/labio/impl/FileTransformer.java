@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +43,37 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
-    try {
 
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
+    NoOpCharTransformer noTransformer = new NoOpCharTransformer();
+
+    try {
+      // read file
+      int BUFFERSIZE = 255;
+      char[] buffer = new char[BUFFERSIZE];
+      InputStreamReader read = new InputStreamReader(
+              new FileInputStream(inputFile),
+              "UTF-8");
+
+      File outputFile = new File(inputFile.getPath() + ".out");
+      OutputStreamWriter write = new OutputStreamWriter(
+              new FileOutputStream(outputFile),
+              "UTF-8");
+
+      int numberOfNewBytes = read.read(buffer);
+      StringBuilder sb = new StringBuilder("");
+      while (numberOfNewBytes != -1) {
+        for (int i = 0; i < numberOfNewBytes; i++) {
+          buffer[i] = noTransformer.transform( Character.toString(buffer[i])).charAt(0);
+          sb.append(lineTransformer.transform(upperTransformer.transform(Character.toString(buffer[i]))));
+        }
+        write.write(sb.toString());
+        write.flush();
+        numberOfNewBytes = read.read(buffer);
+      }
+      read.close();
+      write.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

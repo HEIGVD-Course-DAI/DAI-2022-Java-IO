@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +34,8 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+    UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -40,7 +46,34 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      File outputFile = Paths.get(inputFile.getPath() + ".out").toFile();
 
+      OutputStreamWriter streamWriter = new OutputStreamWriter(
+              new BufferedOutputStream(
+                      new FileOutputStream(outputFile)
+              ),
+              StandardCharsets.UTF_8
+      );
+
+      InputStreamReader streamReader = new InputStreamReader(
+              new BufferedInputStream(
+                      new FileInputStream(inputFile)
+              ),
+              StandardCharsets.UTF_8
+      );
+
+      char[] block = new char[255];
+      int bytesRead = 0;
+      while ((bytesRead = streamReader.read(block)) != -1) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytesRead; ++i) {
+          builder.append(upperCaseCharTransformer.transform(lineNumberingCharTransformer.transform(Character.toString(block[i]))));
+        }
+        streamWriter.write(builder.toString());
+      }
+
+      streamWriter.close();
+      streamReader.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

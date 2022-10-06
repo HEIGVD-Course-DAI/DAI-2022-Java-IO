@@ -22,6 +22,7 @@ public class LineNumberingCharTransformer {
   int nbLine;
 
   public String transform(String c) {
+    if(Objects.equals(c, "\r"))return "";
     if(nbLine == 0){
       ++nbLine;
       c = nbLine + ". " + c;

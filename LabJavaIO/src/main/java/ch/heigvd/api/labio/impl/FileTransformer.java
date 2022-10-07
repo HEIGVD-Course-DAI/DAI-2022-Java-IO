@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +44,22 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      // UTF-8 source : https://mkyong.com/java/how-to-write-utf-8-encoded-data-into-a-file-java/
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
+
+      UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
+      LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
+      int newChar = isr.read();
+      while(newChar != -1) {
+        String s = Character.toString(newChar);
+        osw.write(transformer2.transform(transformer1.transform(s)));
+        newChar = isr.read();
+      }
+      osw.flush();
+      osw.close();
+      isr.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

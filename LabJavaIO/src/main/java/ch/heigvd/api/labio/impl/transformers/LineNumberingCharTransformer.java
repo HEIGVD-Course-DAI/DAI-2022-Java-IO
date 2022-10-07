@@ -22,9 +22,9 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     String toADD = "";
     if(i == 0)
-      toADD =  Integer.toString(++i) + ". ";
+      toADD = ++i + ". ";
     if(c.equals("\n"))
-      return toADD + "\n" + Integer.toString(++i) + ". ";
+      return toADD + "\n" + ++i + ". ";
     if(c.equals("\r"))
       return toADD + "";
     return toADD + c;

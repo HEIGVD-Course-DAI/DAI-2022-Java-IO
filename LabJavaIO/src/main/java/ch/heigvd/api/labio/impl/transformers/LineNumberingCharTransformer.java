@@ -18,18 +18,16 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+  public static int lineNo = 0;
 
   public String transform(String c) {
     /* DONE: implement the transformation here.
      */
     //    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-    StringBuilder result = new StringBuilder();
-//    c = c.replaceAll("\\r\\n?", "\n");
-    String[] lines = c.split("\n");
-    for (int i = 1; i <= lines.length; ++i) {
-        result.append(i).append(". ").append(lines[i-1]).append("\n");
+    if(lineNo == 0) {
+      return ++lineNo + ". " + c;
     }
 
-    return result.toString();
+    return c.equals("\n") ? "\n" + ++lineNo + ". " : c;
   }
 }

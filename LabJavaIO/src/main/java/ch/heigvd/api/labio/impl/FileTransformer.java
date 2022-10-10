@@ -46,10 +46,13 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8));
+    try (InputStreamReader reader = (new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8));
          PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(inputFile.getAbsolutePath() + ".out")), StandardCharsets.UTF_8))){
-      String content = reader.lines().collect(Collectors.joining("\n"));
-      out.write(transformer2.transform(transformer1.transform(content)));
+      LineNumberingCharTransformer.lineNo = 0;
+      int c;
+      while((c = reader.read()) > 0) {
+        out.append(transformer2.transform(transformer1.transform(Character.toString((char)(c)))));
+      }
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

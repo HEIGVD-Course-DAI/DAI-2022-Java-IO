@@ -31,6 +31,7 @@ public class LineNumberingCharTransformer {
     }
 
     if(lineNumber == 1){
+      //Special condition when it's the first line, and it's empty we need to add 2 line number.
       if(c.equals("\n")){
         newValue = lineNumber + ". " + c + (lineNumber+1) + ". ";
         lineNumber++;

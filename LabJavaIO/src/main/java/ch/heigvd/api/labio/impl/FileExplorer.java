@@ -14,9 +14,9 @@ import java.util.Objects;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
-        if(rootDirectory.exists()){
+        if (rootDirectory.exists()) {
             FileTransformer transformer = new FileTransformer();
-            getNextLevel(Objects.requireNonNull(rootDirectory.listFiles()),transformer);
+            getNextLevel(Objects.requireNonNull(rootDirectory.listFiles()), transformer);
         }
 
 
@@ -33,6 +33,12 @@ public class FileExplorer {
 
     }
 
+    /**
+     * Recursive function that goes down the directory/files tree. Check all files/directory in the same level and
+     * call the function again if it's a directory and apply transformers if it's a file.
+     * @param files all file and directory in current level
+     * @param transformer transformer to apply to all files
+     */
     private void getNextLevel(File[] files,FileTransformer transformer){
         for (File file : files){
             if(file.isDirectory()){

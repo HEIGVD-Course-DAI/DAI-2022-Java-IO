@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
 
   private int lineNumber = 1;
-  private boolean isLastCharNewLine = false;
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {

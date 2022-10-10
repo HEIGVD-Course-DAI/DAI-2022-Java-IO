@@ -22,9 +22,9 @@ public class FileTransformer {
     try{
       InputStreamReader input = new FileReader(inputFile, StandardCharsets.UTF_8);
       OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
-      int i;
       UpperCaseCharTransformer ucTransform = new UpperCaseCharTransformer();
       LineNumberingCharTransformer lnTransform = new LineNumberingCharTransformer();
+      int i;
       while((i=input.read())!=-1){
         String firstTransform = ucTransform.transform(((char)i) + "");
         String secondTransform = lnTransform.transform(firstTransform);

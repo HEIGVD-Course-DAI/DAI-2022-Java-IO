@@ -16,12 +16,41 @@ import java.util.logging.Logger;
  *
  * @author Olivier Liechti, Juergen Ehrensberger
  */
+
 public class LineNumberingCharTransformer {
+
+  private int lineNumber = 1;
+  private boolean isLastCharNewLine = false;
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String newValue;
+    //Remove carriage return
+    if(c.equals("\r")){
+      return "";
+    }
+
+    if(lineNumber == 1){
+      if(c.equals("\n")){
+        newValue = lineNumber + ". " + c + (lineNumber+1) + ". ";
+        lineNumber++;
+      }else{
+        newValue = lineNumber + ". " + c;
+      }
+      lineNumber++;
+    }else{
+      //If the char is \n , add new line and return number of the line
+      if(c.equals("\n")){
+        newValue = "\n" + lineNumber + ". ";
+        lineNumber++;
+      }else{
+        newValue = c;
+      }
+    }
+
+
+    return newValue;
+
+   // throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

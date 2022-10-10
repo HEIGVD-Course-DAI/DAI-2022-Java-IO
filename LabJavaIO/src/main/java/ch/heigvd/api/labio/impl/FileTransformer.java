@@ -48,10 +48,10 @@ public class FileTransformer {
      */
     try (InputStreamReader reader = (new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8));
          PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(inputFile.getAbsolutePath() + ".out")), StandardCharsets.UTF_8))){
-      LineNumberingCharTransformer.lineNo = 0;
+      transformer2.lineNo = 0;
       int c;
       while((c = reader.read()) > 0) {
-        out.append(transformer2.transform(transformer1.transform(Character.toString((char)(c)))));
+        out.append(transformer1.transform(transformer2.transform(Character.toString((char)(c)))));
       }
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

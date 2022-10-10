@@ -24,6 +24,7 @@ public class LineNumberingCharTransformer {
     /* DONE: implement the transformation here.
      */
     //    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    c = c.replaceAll("\\r\\n?", "\n");
     if(lineNo == 0) {
       return ++lineNo + ". " + c;
     }

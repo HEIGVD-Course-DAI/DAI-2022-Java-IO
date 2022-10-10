@@ -1,7 +1,6 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
-import java.util.Objects;
 
 /**
  * The FileExplorer performs an exploration of the file system. It

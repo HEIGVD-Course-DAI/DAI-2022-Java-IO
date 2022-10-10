@@ -14,9 +14,13 @@ import java.util.Objects;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
+        File[] files = rootDirectory.listFiles();
         if (rootDirectory.exists()) {
             FileTransformer transformer = new FileTransformer();
-            getNextLevel(Objects.requireNonNull(rootDirectory.listFiles()), transformer);
+            if(files != null){
+                getNextLevel(files, transformer);
+
+            }
         }
     }
 
@@ -28,8 +32,11 @@ public class FileExplorer {
      */
     private void getNextLevel(File[] files,FileTransformer transformer){
         for (File file : files){
+            File[] nextLevelFiles = file.listFiles();
             if(file.isDirectory()){
-                getNextLevel(Objects.requireNonNull(file.listFiles()),transformer);
+                if(nextLevelFiles != null){
+                    getNextLevel(nextLevelFiles,transformer);
+                }
             }else{
                 transformer.transform(file);
             }

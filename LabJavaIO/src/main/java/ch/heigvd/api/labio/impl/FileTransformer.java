@@ -30,6 +30,7 @@ public class FileTransformer {
         String secondTransform = lnTransform.transform(firstTransform);
         output.write(secondTransform);
       }
+      input.close();
       output.close();
 
     } catch (Exception ex) {

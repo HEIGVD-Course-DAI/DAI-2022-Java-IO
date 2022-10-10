@@ -48,10 +48,6 @@ public class LineNumberingCharTransformer {
         newValue = c;
       }
     }
-
-
     return newValue;
-
-   // throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

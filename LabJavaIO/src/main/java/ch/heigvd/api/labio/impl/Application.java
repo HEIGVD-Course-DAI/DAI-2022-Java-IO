@@ -34,13 +34,13 @@ public class Application {
     System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
     
        
-    int numberOfQuotes = 10;
-   /* try {
+    int numberOfQuotes = 0;
+    try {
       numberOfQuotes = Integer.parseInt(args[0]);
     } catch (Exception e) {
       System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
       System.exit(-1);
-    }*/
+    }
 
     Application app = new Application();
     try {
@@ -69,15 +69,9 @@ public class Application {
   public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException {
     QuoteClient client = new QuoteClient();
     for (int i = 0; i < numberOfQuotes; i++) {
+
       Quote quote = client.fetchQuote();
-      /* TODO: There is a missing piece here!
-       *  As you can see, this method handles the first part of the lab. It uses the web service
-       *  client to fetch quotes. We have removed a single line from this method. It is a call to
-       *  one method provided by this class, which is responsible for storing the content of the
-       *  quote in a text file (and for generating the directories based on the tags).
-       *  Add the missing line which stores the content of the quote in a file with
-       *  the name "quote-i.utf8" where 'i' is the number of the file.
-       */
+
       String filename = "quote-" + i + ".utf8";
       storeQuote(quote,filename);
 

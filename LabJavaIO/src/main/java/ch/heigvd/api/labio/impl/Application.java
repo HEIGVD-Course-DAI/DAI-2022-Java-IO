@@ -58,7 +58,7 @@ public class Application {
        * Step 3 : process the quote files, by applying 2 transformations to their content
        *          (convert to uppercase and add line numbers)
        */
-      app.processQuoteFiles();
+      //app.processQuoteFiles();
       
     } catch (IOException ex) {
       LOG.log(Level.SEVERE, "Could not fetch quotes. {0}", ex.getMessage());
@@ -106,20 +106,19 @@ public class Application {
   void storeQuote(Quote quote, String filename) throws IOException {
     // Create the directory path by concatenating the tags from quote, with a slash between the tags
     List<String> tags = quote.getTags();
-    String path = WORKSPACE_DIRECTORY;
+    StringBuilder path = new StringBuilder(WORKSPACE_DIRECTORY);
     for(String tag : tags) {
-      path += "/" + tag;
+      path.append("/").append(tag);
     }
-    path += "/";
+    path.append("/");
 
     // Create directory. Does nothing if the directory already exists.
-    File directory = new File(path);
+    File directory = new File(path.toString());
     directory.mkdirs();
 
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
-    OutputStream os = new FileOutputStream(file);
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8);
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     osw.write(quote.getQuote());
     osw.close();
   }
@@ -128,5 +127,4 @@ public class Application {
     FileExplorer explorer = new FileExplorer();
     explorer.explore(new File(WORKSPACE_DIRECTORY));
   }
-
 }

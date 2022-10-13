@@ -13,8 +13,7 @@ Note: the default branch of this repository is named `main` and not `master`, wh
 The objective of this lab is to get familiar with the Java IO APIs and to interact with the file system. You will implement an application that performs the following tasks:
 
 1. The user invokes the application on the **command line** and provides a numeric argument (*n*).
-2. The application **uses a Web Service client** (which is provided to you) to fetch *n* **quotes** from the [Internet Chuck Norris Database](http://www.icndb.com/api/) online service.
-3. The application stores the content of each quote in a **text file** (utf-8), on the local filesystem. It uses the *tags* associated to each quote to create a hierarchical structure of directories.
+2. The application **uses a Web Service client** (which is provided to you) to fetch *n* **quotes** from [https://api.quotable.io/random](https://api.quotable.io/random). The original lab used in the past fetched quotes from the [Internet Chuck Norris Database](http://www.icndb.com/api/) online service (which explains the picture shown in this README). The Chuck Norris Database has unfortunately been down (returning a server error) for a while now. This has no impact on your work (although is less funny...).
 4. The application then **traverses the local file system** and applies a transformation to each visited quote file.
 5. The processing consists of 1) converting all characters to their **uppercase** value, 2) adding a **line number** at the beginning of each line and 3) converting all line endings to Unix-style line endings (only '\n').
 
@@ -141,7 +140,7 @@ You can then compare `quote-8.utf8.out` with `quote-8.utf8` to see the text rece
 For this lab, we will try the following workflow:
 * create a branch for the entire lab (you call it "dev", "lab" or whatever you want)
 * commit code as soon as possible and push the branch to your fork
-* open a PR (_Pull Request_) whose name start with `[WIP] ` (Work In Progress) and finish with your last and first names. This makes it easier for us to see that you are still working on the lab
+* open a PR (_Pull Request_) whose name start with `[WIP] ` (Work In Progress) and finish with the last names of each member of the team. This makes it easier for us to see that you are still working on the lab
 * even if tests are still red, we have a communication space while you work on the lab
 * whenever you push a new commit, we will be able to see it (and possibly to comment it)
 * at some point, all your tests will be green: you can then signal that you are done; for that, change the name of your PR. Replace `[WIP] ` with `[TOREVIEW] `.

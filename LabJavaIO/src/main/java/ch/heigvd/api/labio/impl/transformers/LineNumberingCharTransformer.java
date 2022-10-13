@@ -20,7 +20,8 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
 
   public int index = 0;
-  private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+
+  private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {
     /* TODO: implement the transformation here.

@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -18,14 +19,30 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+  private int counter = 1;
 
   public String transform(String c) {
-    // 1. Remove all \r
-    c = c.replace("\r", "");
+    // 0. First we have to check if its the first char
+    String copie = c;
+    if(counter == 1) {
+      StringBuilder sb = new StringBuilder(c);
+      sb.insert(0, counter++ + ". ");
+      c = sb.toString();
+    }
 
-    // 2. Add line numbers
-    int counter = 0;
-    
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    // 1. If the char is a \r we remove it
+    if(Objects.equals(copie, "\r"))
+    {
+      c = "";
+    }
+
+    // 2. If the char is a \n we have to add the line number
+    if(Objects.equals(copie, "\n"))
+    {
+      c += counter++ + ". ";
+    }
+
+    // If nothing correspond -> we return the char unchanged
+   return c;
   }
 }

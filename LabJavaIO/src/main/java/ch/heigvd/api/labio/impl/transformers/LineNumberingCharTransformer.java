@@ -18,10 +18,24 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+  private int line = 1;
+  private boolean first = true; // To detect if it is the first char given
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if (first) {
+      c = line + ". " + c;
+      first = false;
+      line++;
+    }
+
+    if (c.contains("\n")) {
+      c += line + ". ";
+      line++;
+    }
+
+    if (c.equals("\r"))
+      c = "";
+
+    return c;
   }
 }

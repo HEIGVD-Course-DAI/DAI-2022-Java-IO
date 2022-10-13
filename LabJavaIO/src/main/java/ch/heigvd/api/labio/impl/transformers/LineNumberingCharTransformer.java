@@ -20,8 +20,12 @@ public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
+    // 1. Remove all \r
+    c = c.replace("\r", "");
+
+    // 2. Add line numbers
+    int counter = 0;
+    
     throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

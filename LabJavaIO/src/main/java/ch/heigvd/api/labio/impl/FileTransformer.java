@@ -46,8 +46,8 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
-    try (InputStreamReader reader = (new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8));
-         PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(inputFile.getAbsolutePath() + ".out")), StandardCharsets.UTF_8))){
+    try (FileReader reader = new FileReader(inputFile, StandardCharsets.UTF_8);
+         OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8)){
       transformer2.lineNo = 0;
       int c;
       while((c = reader.read()) > 0) {

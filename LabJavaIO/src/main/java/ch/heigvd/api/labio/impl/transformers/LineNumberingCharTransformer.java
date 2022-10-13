@@ -21,13 +21,18 @@ public class LineNumberingCharTransformer {
   int i = 0;
   public String transform(String c) {
     String toADD = "";
+
+    // First character
     if(i == 0)
       toADD = ++i + ". ";
+
+    // End of line
     if(c.equals("\n"))
       return toADD + "\n" + ++i + ". ";
+
     if(c.equals("\r"))
       return toADD + "";
+
     return toADD + c;
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

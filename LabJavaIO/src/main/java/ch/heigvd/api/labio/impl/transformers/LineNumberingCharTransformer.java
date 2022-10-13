@@ -28,13 +28,10 @@ public class LineNumberingCharTransformer {
       if (c.equals("\n")) return lineCount + ". \n" + ++lineCount + ". ";
       return lineCount + ". " + c;
     }
-    switch(c) {
-      case "\r":
-        return "";
-      case "\n":
-        return c + ++lineCount + ". ";
-      default:
-        return c;
-    }
+    return switch(c) {
+      case "\r" -> "";
+      case "\n" -> c + ++lineCount + ". ";
+      default -> c;
+    };
   }
 }

@@ -37,11 +37,11 @@ public class FileTransformer {
       UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
       LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
 
-      // read isr and write in osw
+      // Read isr and write in osw
       int newChar = isr.read();
       while(newChar != -1) {
         String s = Character.toString(newChar);
-        // transforme and write
+        // Transform and write
         osw.write(transformer2.transform(transformer1.transform(s)));
         newChar = isr.read();
       }

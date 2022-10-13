@@ -17,7 +17,7 @@ public class FileExplorer {
 
         if(!rootDirectory.exists()) return;
 
-        // Transforme if it's a file
+        // Transform if it's a file
         if(rootDirectory.isFile()) {
             transformer.transform(rootDirectory);
             return;

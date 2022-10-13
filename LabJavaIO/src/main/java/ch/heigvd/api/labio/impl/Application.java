@@ -4,6 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -67,9 +69,7 @@ public class Application {
   }
 
   public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException {
-    QuoteClient client = new QuoteClient();
-    for (int i = 0; i < numberOfQuotes; i++) {
-      Quote quote = client.fetchQuote();
+
       /* TODO: There is a missing piece here!
        *  As you can see, this method handles the first part of the lab. It uses the web service
        *  client to fetch quotes. We have removed a single line from this method. It is a call to
@@ -78,6 +78,11 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
+    QuoteClient client = new QuoteClient();
+    for (int i = 0; i < numberOfQuotes; i++) {
+      Quote quote = client.fetchQuote();
+      String FILENAME = "quote-"+ i + ".utf8";
+      storeQuote(quote, FILENAME);
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
@@ -134,8 +139,19 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+    try (FileOutputStream fos = new FileOutputStream(file);
+         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+         BufferedWriter writer = new BufferedWriter(osw)
+    ) {
 
-  }
+        writer.write(quote.getQuote());
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
+    }
   
   public void processQuoteFiles() throws IOException {
     FileExplorer explorer = new FileExplorer();

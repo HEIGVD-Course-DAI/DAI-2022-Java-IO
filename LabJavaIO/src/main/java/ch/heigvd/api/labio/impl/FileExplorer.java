@@ -34,11 +34,15 @@ public class FileExplorer {
 
         while(!files.isEmpty()) {
             File s = files.pop();
+
             if(s.isFile()){
                 transformer.transform(s);
             } else {
                 if(s.listFiles() == null) continue;
-                for (File f: s.listFiles()) {
+                File listFiles[] = s.listFiles();
+                if(listFiles == null) continue;
+                Arrays.sort(listFiles);
+                for (File f: listFiles) {
                     files.push(f);
                 }
             }

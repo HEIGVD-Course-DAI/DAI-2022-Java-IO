@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
-    // Used as flag
-    boolean firstChar = true;
-    int lineNumber = 1;
+      // Used as flag
+      private boolean firstChar = true;
+      private int lineNumber = 1;
 
     public String transform(String c) {
         if (firstChar) {

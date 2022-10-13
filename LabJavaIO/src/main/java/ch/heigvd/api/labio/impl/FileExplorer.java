@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +31,7 @@ public class FileExplorer {
         File[] files = rootDirectory.listFiles();
 
         if (files != null) {
+            Arrays.sort(files);
             for (File file : files) {
                 if (file.isFile()) {
                     transformer.transform(file);

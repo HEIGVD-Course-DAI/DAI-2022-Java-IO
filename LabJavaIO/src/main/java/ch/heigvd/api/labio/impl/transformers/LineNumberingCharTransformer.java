@@ -19,9 +19,26 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
+  private int lineNumber = 1;
+  private boolean firstRun = true;
+
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String temp = "";
+    if(firstRun) {
+      firstRun = false;
+      temp = lineNumber++ + ". ";
+    }
+
+    if(c.equals("\r"))
+      return temp;
+
+    if(c.equals("\n"))
+      temp += c + lineNumber++ + ". ";
+    else {
+      temp += c;
+    }
+
+    return temp;
+
   }
 }

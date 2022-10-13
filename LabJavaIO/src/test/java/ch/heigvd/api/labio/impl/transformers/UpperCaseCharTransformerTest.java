@@ -18,7 +18,7 @@ public class UpperCaseCharTransformerTest {
     private String transform(String input) {
         UpperCaseCharTransformer transformer = new UpperCaseCharTransformer();
         StringBuilder output = new StringBuilder();
-        for (int i=0; i < input.length(); i++) {
+        for (int i=0; i<input.length(); i++) {
             String s = Character.toString(input.charAt(i));
             output.append(transformer.transform(s));
         }

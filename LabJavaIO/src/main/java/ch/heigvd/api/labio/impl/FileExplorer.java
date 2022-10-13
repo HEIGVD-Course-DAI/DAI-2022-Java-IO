@@ -1,6 +1,9 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayDeque;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -23,7 +26,27 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+        ArrayDeque<File> files = new ArrayDeque<File>();
+
+        files.push(rootDirectory);
+
+
+        while(!files.isEmpty()) {
+            File s = files.pop();
+
+            if(s.isFile()){
+                transformer.transform(s);
+            } else {
+                if(s.listFiles() == null) continue;
+                File listFiles[] = s.listFiles();
+                if(listFiles == null) continue;
+                Arrays.sort(listFiles);
+                for (File f: listFiles) {
+                    files.push(f);
+                }
+            }
+        }
 
     }
 }

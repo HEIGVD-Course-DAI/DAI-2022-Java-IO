@@ -136,7 +136,7 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-    try(PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
+    try(FileWriter out = new FileWriter(file, StandardCharsets.UTF_8)) {
       out.write(quote.getQuote());
     } catch (Exception e) {
       throw new FileSystemException("File couldn't be written");

@@ -35,8 +35,8 @@ public class FileTransformer {
      *  and the LineNumberCharTransformer.
      */
     // ... transformer = ...
-    UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
-    LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer ucTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer LineNoTransformer = new LineNumberingCharTransformer();
 
     /* DONE: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -47,11 +47,11 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try (FileReader reader = new FileReader(inputFile, StandardCharsets.UTF_8);
-         OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8)){
-      transformer2.lineNo = 0;
+         FileWriter out = new FileWriter(inputFile.getAbsolutePath() + ".out", StandardCharsets.UTF_8)){
+      LineNoTransformer.lineNo = 0;
       int c;
       while((c = reader.read()) > 0) {
-        out.append(transformer1.transform(transformer2.transform(Character.toString((char)(c)))));
+        out.append(ucTransformer.transform(LineNoTransformer.transform(Character.toString((char)(c)))));
       }
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

@@ -1,6 +1,14 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +39,24 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
+    /*
+    Line by line could have been done with that (notes from online research):
+    https://www.baeldung.com/java-char-encoding
+    https://docs.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html
+    https://stackoverflow.com/questions/1006276/what-is-the-default-encoding-of-the-jvm
+    https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
+    https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
+     */
+
+    /*
+    Charset encoding = Charset.forName("UTF-8");
+    Path filePath = Path.of("c:/temp/demo.txt");
+    try (Stream<String> lines = Files.lines(inputFile.getAbsolutePath(), encoding)) {
+      lines.forEach(System.out::println);
+    }
+
+    String test[] = Files.lines(inputFile.getAbsolutePath());*/
+
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
@@ -40,6 +66,21 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+
+      FileReader fr = new FileReader(inputFile, StandardCharsets.UTF_8);
+      FileWriter fw = new FileWriter(inputFile.getPath() + ".out", StandardCharsets.UTF_8);
+      LineNumberingCharTransformer lnct = new LineNumberingCharTransformer();
+      UpperCaseCharTransformer ucct = new UpperCaseCharTransformer();
+
+      int c = fr.read();
+
+      while ( c != -1 ) {
+        fw.write(lnct.transform(ucct.transform(Character.toString(c))));
+        c = fr.read();
+      }
+      fw.flush();
+      fw.close();
+      fr.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

@@ -1,6 +1,12 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +35,8 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -40,7 +47,28 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
 
+      File outputFile = Paths.get(inputFile.getPath() + ".out").toFile();
+      OutputStreamWriter osr = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      final int BUFFERSIZE = 255;
+      char[] buffer = new char[BUFFERSIZE];
+      int numberOfNewChar = isr.read(buffer);
+
+      while (numberOfNewChar != -1) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < numberOfNewChar; ++i) {
+          output.append(lineTransformer.transform(upperTransformer.transform(Character.toString(buffer[i]))));
+        }
+
+        osr.write(output.toString());
+
+        numberOfNewChar = isr.read(buffer);
+      }
+
+      isr.close();
+      osr.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

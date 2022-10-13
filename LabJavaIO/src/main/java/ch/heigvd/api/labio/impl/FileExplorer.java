@@ -2,6 +2,7 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,16 +27,18 @@ public class FileExplorer {
          *  For each directory, recursively explore the directory.
          */
         List<File> listOfFolder = new ArrayList<File>();
-
         listOfFolder.add(rootDirectory);
 
+        //Iterate in the root folder and all added folder
         for (int i = 0; i < listOfFolder.size(); ++i) {
             File[] files = listOfFolder.get(i).listFiles();
             if (files == null) {
                 continue;
             }
 
+            Arrays.sort(files);
             for (File file : files) {
+                System.out.println(file.getName());
                 if (file.isFile()) {
                     transformer.transform(file);
                 } else {

@@ -32,7 +32,7 @@ public class FileTransformer {
 
             int c;
             while ((c = reader.read()) != -1) {
-                String newC = ucTrans.transform(Integer.toString(c));
+                String newC = ucTrans.transform(Character.toString((char)c));
                 writer.write(lnTrans.transform(newC));
             }
 

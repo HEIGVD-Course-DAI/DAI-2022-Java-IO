@@ -118,7 +118,7 @@ public class Application {
 
         // Create the output file under the new directory. Use the filename received as parameter.
         File file = new File(directory, filename);
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+        Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
         writer.write(quote.getQuote());
         writer.flush();
         writer.close();

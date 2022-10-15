@@ -25,38 +25,29 @@ public class Application {
 
     public static void main(String[] args) {
 
-        /*
-         * I prefer to have LOG output on a single line, it's easier to read. Being able
+        /* I prefer to have LOG output on a single line, it's easier to read. Being able
          * to change the formatting of console outputs is one of the reasons why it is
-         * better to use a Logger rather than using System.out.println
-         */
+         * better to use a Logger rather than using System.out.println */
         System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
 
-        // Quick fix to avoid launching the application in CLI
-        int numberOfQuotes = 2;
-//    try {
-//      numberOfQuotes = Integer.parseInt(args[0]);
-//    } catch (Exception e) {
-//      System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
-//      System.exit(-1);
-//    }
+        int numberOfQuotes = 0;
+    try {
+      numberOfQuotes = Integer.parseInt(args[0]);
+    } catch (Exception e) {
+      System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
+      System.exit(-1);
+    }
 
         Application app = new Application();
         try {
-            /*
-             * Step 1 : clear the output directory
-             */
+            //Step 1 : clear the output directory
             app.clearOutputDirectory();
 
-            /*
-             * Step 2 : use the QuotesClient to fetch quotes; store each quote in a file
-             */
+            //Step 2 : use the Client to fetch quotes; store each quote in a file
             app.fetchAndStoreQuotes(numberOfQuotes);
 
-            /*
-             * Step 3 : process the quote files, by applying 2 transformations to their content
-             *          (convert to uppercase and add line numbers)
-             */
+            //Step 3 : process the quote files, by applying 2 transformations to
+            // their content(convert to uppercase and add line numbers)
             app.processQuoteFiles();
 
         } catch (IOException ex) {
@@ -67,29 +58,25 @@ public class Application {
 
     public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException {
         QuoteClient client = new QuoteClient();
+
         for (int i = 0; i < numberOfQuotes; i++) {
             Quote quote = client.fetchQuote();
             storeQuote(quote, "quote-" + i + ".utf8");
             LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
-            for (String tag : quote.getTags()) {
-                LOG.info("> " + tag);
 
-            }
+            for (String tag : quote.getTags())
+                LOG.info("> " + tag);
         }
     }
 
-    /**
-     * This method deletes the WORKSPACE_DIRECTORY and its content. It uses the
+    /** * This method deletes the WORKSPACE_DIRECTORY and its content. It uses the
      * apache commons-io library. You should call this method in the main method.
-     *
-     * @throws IOException
-     */
+     * @throws IOException */
     void clearOutputDirectory() throws IOException {
         FileUtils.deleteDirectory(new File(WORKSPACE_DIRECTORY));
     }
 
-    /**
-     * This method stores the content of a quote in the local file system. It has
+    /** This method stores the content of a quote in the local file system. It has
      * 2 responsibilities:
      * <p>
      * - with quote.getTags(), it gets a list of tags and uses
@@ -101,8 +88,7 @@ public class Application {
      *
      * @param quote    the quote object, with tags and text
      * @param filename the name of the file to create and where to store the quote text
-     * @throws IOException
-     */
+     * @throws IOException */
     void storeQuote(Quote quote, String filename) throws IOException {
         // Create the directory path by concatenating the tags from quote, with a slash between the tags
         List<String> tags = quote.getTags();
@@ -118,7 +104,9 @@ public class Application {
 
         // Create the output file under the new directory. Use the filename received as parameter.
         File file = new File(directory, filename);
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(file), StandardCharsets.UTF_8));
+
         writer.write(quote.getQuote());
         writer.flush();
         writer.close();
@@ -128,5 +116,4 @@ public class Application {
         FileExplorer explorer = new FileExplorer();
         explorer.explore(new File(WORKSPACE_DIRECTORY));
     }
-
 }

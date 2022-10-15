@@ -23,19 +23,20 @@ public class LineNumberingCharTransformer {
     private static final String LINE_PREFIX = ". ";
 
     public String transform(String c) {
-
-        //Remove carriage return
+        //Remove carriage returns
         if (c.equals("\r"))
             return "";
 
+        // Manage empty lines
         if (lNum == 1) {
             String newC = lNum + LINE_PREFIX + c;
             if (c.equals("\n"))
-                newC = newC + ++lNum + LINE_PREFIX;
+                newC += ++lNum + LINE_PREFIX;
             lNum++;
             return newC;
         }
 
+        // Manage new lines
         if (c.equals("\n"))
             return "\n" + lNum++ + LINE_PREFIX;
 

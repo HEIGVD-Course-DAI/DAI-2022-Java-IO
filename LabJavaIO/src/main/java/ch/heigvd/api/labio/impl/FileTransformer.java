@@ -18,14 +18,14 @@ import java.util.logging.Logger;
 public class FileTransformer {
     private static final String EXT = ".out";
     private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
+    private static final Charset C_SET = StandardCharsets.UTF_8;
 
     public void transform(File file) {
-        Charset utf8 = StandardCharsets.UTF_8;
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), utf8));
+                    new FileInputStream(file), C_SET));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(file.getPath() + EXT), utf8));
+                    new FileOutputStream(file.getPath() + EXT), C_SET));
 
             UpperCaseCharTransformer ucTrans = new UpperCaseCharTransformer();
             LineNumberingCharTransformer lnTrans = new LineNumberingCharTransformer();
@@ -39,6 +39,7 @@ public class FileTransformer {
             reader.close();
             writer.flush();
             writer.close();
+
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming " +
                     "file.", ex);

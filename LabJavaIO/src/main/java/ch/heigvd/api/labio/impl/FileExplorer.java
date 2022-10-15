@@ -16,14 +16,12 @@ public class FileExplorer {
     public void explore(File rootDirectory) {
         if (rootDirectory.exists()) {
             File[] files = rootDirectory.listFiles();
-            if (files != null){
-                for (File file : files) {
+            if (files != null)
+                for (File file : files)
                     if (file.isFile())
                         ft.transform(file);
                     else
                         explore(file);
-                }
-            }
         }
     }
 }

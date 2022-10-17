@@ -33,38 +33,6 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
-    /*
-    Line by line could have been done with that (notes from online research):
-    https://www.baeldung.com/java-char-encoding
-    https://docs.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html
-    https://stackoverflow.com/questions/1006276/what-is-the-default-encoding-of-the-jvm
-    https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
-    https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
-     */
-
-    /*
-    Charset encoding = Charset.forName("UTF-8");
-    Path filePath = Path.of("c:/temp/demo.txt");
-    try (Stream<String> lines = Files.lines(inputFile.getAbsolutePath(), encoding)) {
-      lines.forEach(System.out::println);
-    }
-
-    String test[] = Files.lines(inputFile.getAbsolutePath());*/
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
     try {
 
       FileReader fr = new FileReader(inputFile, StandardCharsets.UTF_8);

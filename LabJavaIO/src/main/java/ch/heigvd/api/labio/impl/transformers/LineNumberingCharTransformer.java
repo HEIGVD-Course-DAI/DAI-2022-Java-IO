@@ -22,16 +22,9 @@ public class LineNumberingCharTransformer {
   String baseString = "1. ";
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
 
     String temp = baseString + c;
     baseString = "";
-
-    /*
-    if(i == 0) {
-      return "1. ";
-    }*/
 
     if(c.equals("\r")){
      return "";
@@ -45,11 +38,5 @@ public class LineNumberingCharTransformer {
 
     return temp;
 
-    //s += c;
-
-
-
-    //fileString = fileString.replaceAll("\\r\\n", "\n");
-    //fileString = fileString.replaceAll("\\r", "\n");
   }
 }

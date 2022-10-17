@@ -44,20 +44,19 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
-    try {
-      InputStreamReader reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
-      OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsoluteFile() + ".out"), "UTF-8");
+    try (InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsoluteFile() + ".out"), "UTF-8")) {
 
       // Copy content from reader to writer with transformation
       int c;
-      while ((c = reader.read()) != -1) {
-        String s = lineNumberingCharTransformer.transform(String.valueOf((char) c));
-        s = upperCaseCharTransformer.transform(s);
-        writer.write(s);
+      StringBuilder sb = new StringBuilder();
+      String str;
+      while ((c = isr.read()) != -1) {
+        str = lineNumberingCharTransformer.transform(String.valueOf((char) c));
+        sb.append(upperCaseCharTransformer.transform(str));
       }
 
-      reader.close();
-      writer.close();
+      osw.write(sb.toString());
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

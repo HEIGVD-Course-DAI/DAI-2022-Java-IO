@@ -18,10 +18,25 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+  int i = 1;
+  String baseString = "1. ";
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    String temp = baseString + c;
+    baseString = "";
+
+    if(c.equals("\r")){
+     return "";
+    }
+
+    if(c.equals("\n")) {
+      ++i;
+      String s = i +  ". ";
+      return temp += s;
+    }
+
+    return temp;
+
   }
 }

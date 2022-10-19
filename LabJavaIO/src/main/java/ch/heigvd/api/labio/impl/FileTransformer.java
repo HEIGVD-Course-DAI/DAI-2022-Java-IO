@@ -6,6 +6,7 @@ import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
@@ -50,7 +51,7 @@ public class FileTransformer {
      */
 
     try {
-      FileReader reader = new FileReader(inputFile);
+      FileReader reader = new FileReader(inputFile, StandardCharsets.UTF_8);
       String path = Paths.get(inputFile.getPath()).getParent().toString() + "\\" + inputFile.getName() + ".out";
       Writer writer = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
 

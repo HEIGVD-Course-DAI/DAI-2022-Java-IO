@@ -7,7 +7,7 @@ import java.io.File;
  * visits the files and directory in alphabetic order.
  * When the explorer sees a directory, it recursively explores the directory.
  * When the explorer sees a file, it invokes the transformation on it.
- *
+ Gabriel Cattel Torres*
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class FileExplorer {
@@ -23,7 +23,17 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
+        if(rootDirectory.exists()) {
+            if(rootDirectory.isFile()) {
+                transformer.transform(rootDirectory);
+            }
+            File fichiers[] = rootDirectory.listFiles();
+            if(fichiers != null) {
+                for(File fichier : fichiers) {
+                    explore(fichier);
+                }
+            }
+        }
     }
 }

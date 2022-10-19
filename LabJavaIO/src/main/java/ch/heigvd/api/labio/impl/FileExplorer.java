@@ -9,7 +9,7 @@ import java.util.Arrays;
  * When the explorer sees a directory, it recursively explores the directory.
  * When the explorer sees a file, it invokes the transformation on it.
  *
- * @author Olivier Liechti, Juergen Ehrensberger
+ * @author Olivier Liechti, Juergen Ehrensberger, Stéphane Nascimento Santos
  */
 public class FileExplorer {
 

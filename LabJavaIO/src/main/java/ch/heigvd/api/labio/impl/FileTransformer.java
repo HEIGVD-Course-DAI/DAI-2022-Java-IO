@@ -13,11 +13,10 @@ import java.util.logging.Logger;
  * It writes a copy of the input file to an output file, but applies a
  * character transformer before writing each character.
  *
- * @author Juergen Ehrensberger
+ * @author Juergen Ehrensberger, Stéphane Nascimento Santos
  */
 public class FileTransformer {
     private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
-
     public void transform(File inputFile) {
         /*
          * This method opens the given inputFile and copies the
@@ -40,19 +39,16 @@ public class FileTransformer {
             File outputFile = new File(inputFile.getPath() + ".out");
             BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile, StandardCharsets.UTF_8));
 
-            if (br.ready()) { // N'insert pas le premier le EOL si une seul ligne
-                bw.write(lineNumberTr.transform(""));
-            }
-
             while (br.ready()) {
                 String currentChar = (char) br.read() + "";
 
-                if (!currentChar.equals("\r")) {
-                    bw.write(upCaseTr.transform(currentChar));
+                bw.write(
+                        lineNumberTr.transform(
+                                upCaseTr.transform(
+                                        currentChar)));
 
-                    if (currentChar.equals("\n")) {
-                        bw.write(lineNumberTr.transform(""));
-                    }
+                if (currentChar.equals("\n")) {
+                    bw.write(lineNumberTr.transform(""));
                 }
             }
             br.close();
@@ -62,10 +58,6 @@ public class FileTransformer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-        //
-
         /* TODO: implement the following logic here:
          *  - open the inputFile and an outputFile
          *    Use UTF-8 encoding for both.

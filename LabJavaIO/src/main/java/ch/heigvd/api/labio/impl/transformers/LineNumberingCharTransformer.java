@@ -14,12 +14,16 @@ import java.util.logging.Logger;
  * 1. This is the first line.\n
  * 2. This is the second line.
  *
- * @author Olivier Liechti, Juergen Ehrensberger
+ * @author Olivier Liechti, Juergen Ehrensberger, Stéphane Nasciemnto Santos
  */
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
     int counter;
     public String transform(String c) {
-        return String.valueOf(++counter) + ". " + c;
+        String d = c;
+        if (c.equals("\r")) d = "";
+        if (counter == 0 )  d = String.valueOf(++counter) + ". " + d ;
+        if (c.equals("\n")) d = d + String.valueOf(++counter) + ". ";
+        return d;
     }
 }

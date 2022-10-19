@@ -2,6 +2,7 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 import java.util.Objects;
+import java.io.*;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -13,30 +14,22 @@ import java.util.Objects;
  */
 public class FileExplorer {
 
-    public void explore(File rootDirectory) {
-        FileTransformer transformer = new FileTransformer();
+    public void explore(File rootDirectory) throws IOException {
+
+        FileTransformer trf = new FileTransformer();
 
         // TO DO: File transformer
-
         // To check if the root directory is a directory
         if(rootDirectory.isDirectory()){
-            // To check if every child
+            // To check every child if there are subdir or if this a file
             for (File subDir: Objects.requireNonNull(rootDirectory.listFiles())){
+                // Explore subdirectory
                 if(subDir.isDirectory()) explore(subDir);
-                if(subDir.isFile()) transformer.transform(subDir);
+                // Transform subdirectory
+                if(subDir.isFile()) trf.transform(subDir);
             }
         }
-        if(rootDirectory.isFile()) transformer.transform(rootDirectory);
-
-
-        /* TODO: implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - how to get the files and directories of rootDirectory (which is of class File)
-         *  - to sort the items (files and directories) alphabetically
-         *  - to check if an item is a file or a directory
-         *  For each file, call the FileTransformer (see above).
-         *  For each directory, recursively explore the directory.
-         */
+        if(rootDirectory.isFile()) trf.transform(rootDirectory);
         //throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }

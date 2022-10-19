@@ -4,8 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,11 +79,10 @@ public class Application {
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
 
-      storeQuote(quote, "quote-" + i + ".utf8");
-
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
+
       }
     }
   }
@@ -103,7 +102,7 @@ public class Application {
    * 2 responsibilities: 
    * 
    * - with quote.getTags(), it gets a list of tags and uses
-   *   it to create sub-folders for instance, if a quote has three tags "A", "B" and
+   *   it to create sub-folders (for instance, if a quote has three tags "A", "B" and
    *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.
    * 
    * - with quote.getQuote(), it has access to the text of the quote. It stores
@@ -136,13 +135,11 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
 
-    OutputStreamWriter osw = new OutputStreamWriter (new FileOutputStream (file), StandardCharsets.UTF_8);
-    osw.write(quote.getQuote());
-    osw.close();
   }
   
   public void processQuoteFiles() throws IOException {
     FileExplorer explorer = new FileExplorer();
     explorer.explore(new File(WORKSPACE_DIRECTORY));
   }
+
 }

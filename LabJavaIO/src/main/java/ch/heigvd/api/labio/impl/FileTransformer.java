@@ -52,7 +52,7 @@ public class FileTransformer {
 
     try {
       FileReader reader = new FileReader(inputFile, StandardCharsets.UTF_8);
-      String path = Paths.get(inputFile.getPath()).getParent().toString() + "\\" + inputFile.getName() + ".out";
+      String path = Paths.get(inputFile.getPath()).getParent().toString() + "/" + inputFile.getName() + ".out";
       Writer writer = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
 
       StringBuilder newString = new StringBuilder();

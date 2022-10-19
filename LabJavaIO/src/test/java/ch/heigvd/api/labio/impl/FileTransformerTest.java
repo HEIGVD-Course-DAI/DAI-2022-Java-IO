@@ -34,11 +34,11 @@ public class FileTransformerTest {
         writer.close();
     }
 
-     @BeforeAll
-     @AfterAll
-     public void clearFiles() throws IOException {
-         FileUtils.deleteDirectory(new File(workingDirectory));
-     }
+    @BeforeAll
+    @AfterAll
+    public void clearFiles() throws IOException {
+        FileUtils.deleteDirectory(new File(workingDirectory));
+    }
 
     @Test
     public void itShouldCreateAnOutFile() throws IOException {

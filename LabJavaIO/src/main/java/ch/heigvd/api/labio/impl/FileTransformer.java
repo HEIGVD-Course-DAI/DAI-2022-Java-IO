@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +33,11 @@ public class FileTransformer {
     /* TODO: first start with the NoOpCharTransformer which does nothing.
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
+     *
      */
     // ... transformer = ...
+    UpperCaseCharTransformer uccTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lncTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -40,7 +48,22 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      File outputFile = Paths.get(inputFile.getPath() + ".out").toFile();
 
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      OutputStreamWriter osr = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      int c = isr.read();
+
+      while (c != -1) {
+        String s = uccTransformer.transform(Character.toString(c));
+        s = lncTransformer.transform(s);
+        osr.write(s);
+        c = isr.read();
+      }
+
+      isr.close();
+      osr.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

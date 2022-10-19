@@ -57,8 +57,7 @@ public class FileTransformer {
       StringBuilder newString = new StringBuilder();
       int i = reader.read();
       while ( i != -1 ) {
-        Character c = (char)i;
-        newString.append(c);
+        newString.appendCodePoint(i);
         i = reader.read();
       }
       writer.write(transformer2.transform(transformer1.transform(newString.toString())));

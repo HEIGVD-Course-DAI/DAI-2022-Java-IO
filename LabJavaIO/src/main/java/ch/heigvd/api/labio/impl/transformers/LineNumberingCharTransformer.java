@@ -17,11 +17,38 @@ import java.util.logging.Logger;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class LineNumberingCharTransformer {
+
+  private int cnt = 1;
+  boolean is1stLine = true;
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
 
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String emptyLine;
+
+    if(c.charAt(0) == '\n'){
+      if(is1stLine){
+        is1stLine = false;
+        emptyLine = cnt++ + ". " + c;
+        return emptyLine + cnt++ + ". ";
+      }
+      return c + "" + cnt++ + ". ";
+    }
+
+    if(is1stLine){
+      is1stLine = false;
+      return cnt++ + ". " + c;
+    }
+
+    if(c.charAt(0) == '\r'){
+      return "";
+    }
+
+
+
+    return c;
+
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

@@ -41,16 +41,11 @@ public class FileTransformer {
 
             while (br.ready()) {
                 String currentChar = (char) br.read() + "";
-
                 bw.write(
                         lineNumberTr.transform(
                                 upCaseTr.transform(
                                         currentChar)));
-
-                if (currentChar.equals("\n")) {
-                    bw.write(lineNumberTr.transform(""));
                 }
-            }
             br.close();
             bw.flush();
             bw.close();

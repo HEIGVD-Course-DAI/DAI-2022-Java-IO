@@ -7,7 +7,6 @@ import java.io.File;
  * visits the files and directory in alphabetic order.
  * When the explorer sees a directory, it recursively explores the directory.
  * When the explorer sees a file, it invokes the transformation on it.
- Gabriel Cattel Torres*
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class FileExplorer {

@@ -148,7 +148,6 @@ public class Application {
     outputStreamWriter2.flush();
     outputStreamWriter2.close();
 
-
   }
   
   public void processQuoteFiles() throws IOException {

@@ -27,11 +27,15 @@ public class LineNumberingCharTransformer {
       ++nbLine;
       c = nbLine + ". " + c;
     }
-
-    if(c.substring(c.length() - 1).equals("\n")){
-      ++nbLine;
-      c = c + nbLine + ". ";
+    StringBuilder newString = new StringBuilder();
+    for (int i=0; i<c.length(); i++) {
+      Character cha = c.charAt(i);
+      if(!cha.equals('\r'))newString.append(cha);
+      if(cha.equals('\n')){
+        ++nbLine;
+        newString.append(nbLine).append(". ");
+      }
     }
-    return c;
+    return newString.toString();
   }
 }

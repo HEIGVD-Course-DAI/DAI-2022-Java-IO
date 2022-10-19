@@ -135,7 +135,7 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
     Writer writer = new OutputStreamWriter(new FileOutputStream(file.getPath()), "UTF-8");
-    writer.write(quote.toString());
+    writer.write(quote.getQuote());
     writer.close();
   }
   
